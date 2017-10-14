@@ -1,86 +1,68 @@
-print(__doc__)
-
-import numpy as np
 import matplotlib.pyplot as plt
+import numpy as np
+from sklearn import neighbors, datasets
 
-from sklearn.datasets import fetch_olivetti_faces
-from sklearn.utils.validation import check_random_state
+iris = datasets.load_iris()
+X = iris.data[:,:2]
+y = iris.target
 
-from sklearn.ensemble import ExtraTreesRegressor
-from sklearn.neighbors import KNeighborsRegressor
-from sklearn.linear_model import LinearRegression
-from sklearn.linear_model import RidgeCV
+a = [0,1,2,3,11,5,6,7,8,9,10]
 
-# Load the faces datasets
-data = fetch_olivetti_faces()
-targets = data.target
+a = np.delete(a,3)
 
-data = data.images.reshape((len(data.images), -1))
-train = data[targets < 30]
-test = data[targets >= 30]  # Test on independent people
+print(a)
 
-# Test on a subset of people
-n_faces = 5
-rng = check_random_state(4)
-face_ids = rng.randint(test.shape[0], size=(n_faces, ))
-test = test[face_ids, :]
+def ONN(X,y,u):
+    """Classifies by the nearest training object
 
-n_pixels = data.shape[1]
-# Upper half of the faces
-X_train = train[:, :(n_pixels + 1) // 2]
-# Lower half of the faces
-y_train = train[:, n_pixels // 2:]
-X_test = test[:, :(n_pixels + 1) // 2]
-y_test = test[:, n_pixels // 2:]
+    Keyword arguments:
+    X -- training sample
+    y -- classes of training samples
+    u -- object to classify
+    """
+    return y[np.argmin([(x[0]-u[0])**2 + (x[1]-u[1])**2 for x in X])]
 
-# Fit estimators
-ESTIMATORS = {
-    "Extra trees": ExtraTreesRegressor(n_estimators=10, max_features=32,
-                                       random_state=0),
-    "K-nn": KNeighborsRegressor(),
-    "Linear regression": LinearRegression(),
-    "Ridge": RidgeCV(),
-}
+def KNN(X,y,u,k):
+    """Classifies by K nearest training object
 
-y_test_predict = dict()
-for name, estimator in ESTIMATORS.items():
-    estimator.fit(X_train, y_train)
-    y_test_predict[name] = estimator.predict(X_test)
+    Keyword arguments:
+    X -- training sample
+    y -- classes of training samples
+    u -- object to classify
+    k -- number of near object to classify
+    """
+    L = [(x[0]-u[0])**2 + (x[1]-u[1])**2 for x in X]
+    L,y = zip(*sorted(zip(L, y)))
+    l = []
+    for i in range(0,k):
+        l.append(y[i])
+    u, c = np.unique(l, return_counts=True)
+    return u[np.argmax(c)]
 
-# Plot the completed faces
-image_shape = (64, 64)
 
-n_cols = 1 + len(ESTIMATORS)
-plt.figure(figsize=(2. * n_cols, 2.26 * n_faces))
-plt.suptitle("Face completion with multi-output estimators", size=16)
+def LOOforKNN(X,y):
+    diff = len(X)
+    gk = 0
+    kvarray = []
+    u = [[],0]
+    for k in range(1,len(X)):
+        cd = 0
+        for i in range(1,len(X)):
+            u[0] = X[i]
+            u[1] = y[i]
+            Xt = np.delete(X,i,0)
+            yt = np.delete(y,i)
+            if(KNN(Xt,yt,u[0],k)!=u[1]):
+                cd = cd+1
+        if(diff>cd):
+            diff = cd
+            gk = k
+        kvarray.append(cd)
+    return gk,kvarray
 
-for i in range(n_faces):
-    true_face = np.hstack((X_test[i], y_test[i]))
+gk,ga = LOOforKNN(X,y)
+print(gk)
 
-    if i:
-        sub = plt.subplot(n_faces, n_cols, i * n_cols + 1)
-    else:
-        sub = plt.subplot(n_faces, n_cols, i * n_cols + 1,
-                          title="true faces")
-
-    sub.axis("off")
-    sub.imshow(true_face.reshape(image_shape),
-               cmap=plt.cm.gray,
-               interpolation="nearest")
-
-    for j, est in enumerate(sorted(ESTIMATORS)):
-        completed_face = np.hstack((X_test[i], y_test_predict[est][i]))
-
-        if i:
-            sub = plt.subplot(n_faces, n_cols, i * n_cols + 2 + j)
-
-        else:
-            sub = plt.subplot(n_faces, n_cols, i * n_cols + 2 + j,
-                              title=est)
-
-        sub.axis("off")
-        sub.imshow(completed_face.reshape(image_shape),
-                   cmap=plt.cm.gray,
-                   interpolation="nearest")
-
+plt.plot([x for x in range(1,len(X))], ga, 'ro')
+plt.axis([0, len(X)+1, 0, ga[np.argmax(ga)]+1])
 plt.show()

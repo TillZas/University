@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 from matplotlib.colors import ListedColormap
 from sklearn import neighbors, datasets
 
-n_neighbors = 15
+n_neighbors = 1
 
 # import some data to play with
 iris = datasets.load_iris()
@@ -33,6 +33,7 @@ for weights in ['uniform', 'distance']:
     xx, yy = np.meshgrid(np.arange(x_min, x_max, h),
                          np.arange(y_min, y_max, h))
     Z = clf.predict(np.c_[xx.ravel(), yy.ravel()])
+    K = np.array([1,2,3,3,2,1]);
 
     # Put the result into a color plot
     Z = Z.reshape(xx.shape)
