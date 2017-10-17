@@ -35,3 +35,7 @@
 Пример работы:
 
 ![Пример работы классификатора](https://github.com/TillZas/University/blob/master/JupyterNotebook/ParsenWindow.png)
+
+***
+Литература:
+*В
