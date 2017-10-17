@@ -38,4 +38,5 @@
 
 ***
 Литература:
-*В
+
+*[Воронцов К.В. Математические методы машинного обучения](https://github.com/TillZas/University/blob/master/JupyterNotebook/Voron-ML-1.pdf)
