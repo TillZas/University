@@ -27,16 +27,29 @@
 **ParsenWindow** - алгоритм классификации методом парзеновского окна
 
 Принцип работы: Вводится невозрастающая функция ядра *K(z)* и число **h != 0** обозначающее ширину "окна".
-Для каждому элементу выборки x_i ставится в соответствии число *P_i = K(p(x_i,u)/h)*, где u это классифицируемый элемент а p(a,b) функция расстояния между a и b. Результатом работы классификатора является класс, сумма значений *P_i* элементов которого наибольшая.
+Каждому элементу выборки x_i ставится в соответствии число *P_i = K(p(x_i,u)/h)*, где u это классифицируемый элемент а p(a,b) функция расстояния между a и b. Результатом работы классификатора является класс, сумма значений *P_i* элементов которого наибольшая.
 
-Реализация алгоритма представлена в файле [*ParsenWindow.ipynb
-*](https://github.com/TillZas/University/blob/master/JupyterNotebook/ParsenWindow.ipynb)
+Реализация алгоритма представлена в файле [*ParsenWindow.ipynb*](https://github.com/TillZas/University/blob/master/JupyterNotebook/ParsenWindow.ipynb)
 
 Пример работы:
 
 ![Пример работы классификатора](https://github.com/TillZas/University/blob/master/JupyterNotebook/ParsenWindow.png)
 
 ***
+
+**Potential Function** - алгоритм классификации методом потенциальных функций
+
+Принцип работы: Вводится невозрастающая функция ядра *K(z)* и массивы **h** и **t** обозначающее ширину "окна" и потенциал для кждого элемента соответственно.
+Каждому элементу выборки x_i ставится в соответствии число *P_i = t_i*K(p(x_i,u)/h_i)*, где u это классифицируемый элемент а p(a,b) функция расстояния между a и b. Результатом работы классификатора является класс, сумма значений *P_i* элементов которого наибольшая.
+
+Реализация алгоритма представлена в файле [*PotentialFunction.ipynb*](https://github.com/TillZas/University/blob/master/JupyterNotebook/PotentialFunction.ipynb)
+
+Пример работы:
+
+![Пример работы классификатора](https://github.com/TillZas/University/blob/master/JupyterNotebook/PotentialFunction.png)
+
+
+***
 Литература:
 
-*[Воронцов К.В. Математические методы машинного обучения](https://github.com/TillZas/University/blob/master/JupyterNotebook/Voron-ML-1.pdf)
+*[К.В. Воронцов  Математические методы обучения по прецедентам (теория обучения машин)](https://github.com/TillZas/University/blob/master/JupyterNotebook/Voron-ML-1.pdf)
