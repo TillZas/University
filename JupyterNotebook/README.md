@@ -1,6 +1,6 @@
 # Метрические алгоритмы классификации
 ***
-**ONN** - алгоритм классификации по ближайшему соседу
+**1NN** - алгоритм классификации по ближайшему соседу
 
 Реализация алгоритма представлена в файле [*IrisONN.ipynb*](https://github.com/TillZas/University/blob/master/JupyterNotebook/IrisONN.ipynb)
 
