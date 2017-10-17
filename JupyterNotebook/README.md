@@ -52,4 +52,4 @@
 ***
 Литература:
 
-*[К.В. Воронцов  Математические методы обучения по прецедентам (теория обучения машин)](https://github.com/TillZas/University/blob/master/JupyterNotebook/Voron-ML-1.pdf)
+[К.В. Воронцов  Математические методы обучения по прецедентам (теория обучения машин)](https://github.com/TillZas/University/blob/master/JupyterNotebook/Voron-ML-1.pdf)
