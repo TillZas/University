@@ -5,15 +5,29 @@ from sklearn import neighbors, datasets
 
 
 
-a = [1,2,2,2,2,6,0,0,0,0,9,9,9]
-b = [0,0,0,1,1,1,2,2,2,2,5,5,5]
+#a = [1,2,2,2,2,6,0,0,0,0,9,9,9]
+#b = [0,0,0,1,1,1,2,2,2,2,5,5,5]
 
-print(np.copy(a))
+#print(np.copy(a))
 #print(np.argmax(np.bincount(b,a)))
 
-#iris = datasets.load_iris()
-#X = iris.data[:,:2]
-#y = iris.target
+iris = datasets.load_iris()
+X = iris.data[:,:2]
+y = iris.target
+
+#print(iris)
+#print(X)
+
+print(len(iris.data[0]))
+for i in range(0,len(iris.data[0])):
+    print(iris.feature_names[i])
+for i in range(0,len(iris.data)):
+    s = ""
+    for k in range(0,len(iris.data[0])):
+        s = s+str(iris.data[i][k])+" "
+    s = s+str(iris.target[i])
+    print(s)
+
 
 #a = [0,1,2,3,11,5,6,7,8,9,10]
 
