@@ -6,7 +6,7 @@
 
 Пример работы:
 
-![Пример работы классификатора](https://github.com/TillZas/University/blob/master/JupyterNotebook/IrisONN.png)
+<img src="https://github.com/TillZas/University/blob/master/JupyterNotebook/IrisONN.png" data-canonical-src="https://github.com/TillZas/University/blob/master/JupyterNotebook/IrisONN.png" width="600" height="500" />
 
 ***
 
@@ -16,7 +16,9 @@
 
 Пример работы (при оптимальном **k** = 31):
 
-![Пример работы классификатора](https://github.com/TillZas/University/blob/master/JupyterNotebook/IrisKNN.png)
+
+<img src="https://github.com/TillZas/University/blob/master/JupyterNotebook/IrisKNN.png" data-canonical-src="https://github.com/TillZas/University/blob/master/JupyterNotebook/IrisKNN.png" width="600" height="500" />
+
 
 ***
 
@@ -26,17 +28,21 @@
 
 Пример работы:
 
-![Пример работы классификатора](https://github.com/TillZas/University/blob/master/JupyterNotebook/ParsenWindow.png)
+
+<img src="https://github.com/TillZas/University/blob/master/JupyterNotebook/ParsenWindow.png" data-canonical-src="https://github.com/TillZas/University/blob/master/JupyterNotebook/ParsenWindow.png" width="600" height="500" />
 
 ***
 
 **Potential Function** - алгоритм классификации методом потенциальных функций
 
+
+
 Реализация алгоритма представлена в файле [*PotentialFunction.ipynb*](https://github.com/TillZas/University/blob/master/JupyterNotebook/PotentialFunction.ipynb)
 
 Пример работы:
 
-![Пример работы классификатора](https://github.com/TillZas/University/blob/master/JupyterNotebook/PotentialFunction.png)
+
+<img src="https://github.com/TillZas/University/blob/master/JupyterNotebook/PotentialFunction.png" data-canonical-src="https://github.com/TillZas/University/blob/master/JupyterNotebook/PotentialFunction.png" width="600" height="500" />
 
 
 ***
