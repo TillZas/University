@@ -29,6 +29,8 @@ for i in range(0,len(iris.data)):
     print(s)
 
 
+
+
 #a = [0,1,2,3,11,5,6,7,8,9,10]
 
 #a = np.delete(a,3)
