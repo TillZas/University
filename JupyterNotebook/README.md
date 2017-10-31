@@ -12,7 +12,7 @@
 
 **KNN** - алгоритм классификации по **k** ближайшим соседам
 
-Реализация алгоритма представлена в файле [*IrisKNN.ipynb*](https://github.com/TillZas/University/blob/master/JupyterNotebook/IrisKNN.ipynb)
+Реализация алгоритма представлена в файле [*IrisKNNWithLOO.ipynb*](https://github.com/TillZas/University/blob/master/JupyterNotebook/IrisKNNWithLOO.ipynb)
 
 Пример работы (при оптимальном **k** = 31):
 
