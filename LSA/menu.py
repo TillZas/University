@@ -2,6 +2,7 @@ import fileloader as fl
 import StemmerPorter as sp
 import textEdition as te
 from sklearn.feature_extraction.text import TfidfTransformer
+from sklearn.cluster import MiniBatchKMeans
 from mpl_toolkits.mplot3d import Axes3D
 import numpy.linalg as linalg
 import matplotlib.pyplot as plt
@@ -28,7 +29,6 @@ from sklearn.datasets import fetch_20newsgroups
 # print("%d categories" % len(dataset.target_names))
 # print()
 # ##############################################################################
-
 draw_words = False
 draw_words_names = True
 
@@ -41,6 +41,7 @@ file = open("stopwords.txt", "r")
 for line in file:
     swords.append(line[:len(line)-1])
 file.close()
+swords_stem = [sp.stem(w) for w in swords]
 
 colors=['#FF0000', '#FF00FF', '#0000FF', '#00E6FF', '#00FF3C', '#E6FF00', '#FF9100', '#DCAFAF']
 #colors = ListedColormap(['#FF0000', '#FF00FF', '#0000FF', '#00E6FF', '#00FF3C', '#E6FF00', '#FF9100', '#DCAFAF'])
@@ -61,11 +62,12 @@ for dir_id in range(0, groupAmount):
         for line in file:
             tokens = te.combine_token_sets(
                 [tokens,
-                 te.tokenize(te.remove_punctuations(line))]
+                 te.remove_stopwords(te.tokenize(te.remove_punctuations(line)), swords)]
             )
         file.close()
         tokens = [sp.stem(x) for x in tokens]
         tokens = te.remove_stopwords(tokens, swords)
+        tokens = te.remove_stopwords(tokens, swords_stem)
         counts.append(te.tokens_to_freq(tokens))
         documents_color.append(dir_id)
         documents_names.append(fileName[1])
@@ -94,6 +96,10 @@ for i in range(0, groupAmount):
 
 for i in range(0, len(documents_color)):
     draw_matr[documents_color[i]].append([v[0][i], v[1][i], v[2][i]])
+
+
+clr = MiniBatchKMeans(n_clusters=groupAmount)
+new_v = clr.fit_predict(v.T[:,3:])
 
 fig = plt.figure()
 
@@ -133,7 +139,22 @@ else:
 
     if draw_article_names:
         for i in range(0, len(v[0])):
-            ax.text(v[0][i], v[1][i], res[1][i], fontsize=10)
+            ax.text(v[0][i], v[1][i], res[2][i], fontsize=10)
     ax.legend()
     ax.grid(True)
+#plt.show()
+
+
+
+fig2 = plt.figure()
+v = v.T
+if draw_3D:
+    ax = fig2.add_subplot(111, projection='3d')
+    ax.scatter(v[:,0], v[:,1], v[:,2],color=[colors[x] for x in new_v])
+else:
+    ax = fig2.add_subplot(111)
+    ax.scatter(v[:,0], v[:,1],color=[colors[x] for x in new_v])
+
 plt.show()
+
+

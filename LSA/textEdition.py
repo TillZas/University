@@ -79,8 +79,8 @@ def clear_matrix(tokens_matr):
     documents = tokens_matr[1]
     tokens = []
     for i in range(0, len(tokens_matr[0])):
-        if tokens_matr[4][i] <=40 and tokens_matr[3][i] > 5:
-            print(str(tokens_matr[4][i])+" :"+tokens_matr[0][i])
+        if tokens_matr[4][i] <=40 and tokens_matr[3][i] > 5 and len(tokens_matr[0][i])>2:
+            print(tokens_matr[0][i])
             names.append(tokens_matr[0][i])
             tokens.append(tokens_matr[2][i])
     return [names, documents, tokens]
