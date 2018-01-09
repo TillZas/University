@@ -29,10 +29,10 @@ from sklearn.datasets import fetch_20newsgroups
 # print()
 # ##############################################################################
 
-draw_words = True
+draw_words = False
 draw_words_names = True
 
-draw_article_names = True
+draw_article_names = False
 
 draw_3D = True
 
@@ -56,15 +56,16 @@ for dir_id in range(0, groupAmount):
     groups.append(groupName)
     print("Group "+groupName+" processing!")
     for fileName in files:
-        file = open(fileName[0], "r")#, encoding='utf-8')
+        file = open(fileName[0], "r", encoding='utf-8')
         tokens = []
         for line in file:
             tokens = te.combine_token_sets(
                 [tokens,
-                 te.tokenize(te.remove_punctuations(line), swords)]
+                 te.tokenize(te.remove_punctuations(line))]
             )
         file.close()
-        #tokens = [sp.stem(x) for x in tokens]
+        tokens = [sp.stem(x) for x in tokens]
+        tokens = te.remove_stopwords(tokens, swords)
         counts.append(te.tokens_to_freq(tokens))
         documents_color.append(dir_id)
         documents_names.append(fileName[1])
@@ -82,6 +83,9 @@ print("-----------------------------------------")
 # print(s)
 # print(str(len(v))+":"+str(len(v[0])))
 
+#for i in range(0, len(u)):
+#    print(res[0][i])
+
 print("Drawing")
 
 draw_matr = []
@@ -90,7 +94,6 @@ for i in range(0, groupAmount):
 
 for i in range(0, len(documents_color)):
     draw_matr[documents_color[i]].append([v[0][i], v[1][i], v[2][i]])
-
 
 fig = plt.figure()
 
@@ -106,6 +109,8 @@ if draw_3D:
     for i in range(0, groupAmount):
         ax.scatter([x[0] for x in draw_matr[i]], [x[1] for x in draw_matr[i]], [x[2] for x in draw_matr[i]],
                    color=colors[i], label=groups[i])
+        #ax.scatter([x for x in draw_matr[i][0]], [x for x in draw_matr[i][1]], [x for x in draw_matr[i][2]],
+        #           color=colors[i], label=groups[i])
 
     if draw_article_names:
         for i in range(0, len(v[0])):
@@ -132,6 +137,3 @@ else:
     ax.legend()
     ax.grid(True)
 plt.show()
-
-# for i in range(0, len(u)):
-#     print(res[0][i])

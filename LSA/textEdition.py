@@ -1,20 +1,28 @@
 import re
 import numpy as np
 
-__russian_word = re.compile("[а-яА-Я]+")
+__russian_word = re.compile("^[а-яА-Я]+$")
+
 
 def tokens_to_freq(tokens):
     words, count = np.unique(tokens, return_counts=True)
     return [words, count]
 
 
-def tokenize(line, stopwords):
+def remove_stopwords(tokens, stopwords):
+    res = []
+    for token in tokens:
+        if token not in stopwords:
+            res.append(token)
+    return res
+
+
+def tokenize(line):
     result = line.split(" ")
-    if not stopwords:
-        return result
+    result = [x if __russian_word.match(x) else "" for x in result]
     filtered_result = []
     for token in result:
-        if token not in stopwords and token != '':# and __russian_word.match(token):
+        if token != '':
             filtered_result.append(token)
     return filtered_result
 
@@ -71,14 +79,15 @@ def clear_matrix(tokens_matr):
     documents = tokens_matr[1]
     tokens = []
     for i in range(0, len(tokens_matr[0])):
-        if tokens_matr[4][i] > 1 and tokens_matr[3][i] > 1:
+        if tokens_matr[4][i] <=40 and tokens_matr[3][i] > 5:
+            print(str(tokens_matr[4][i])+" :"+tokens_matr[0][i])
             names.append(tokens_matr[0][i])
             tokens.append(tokens_matr[2][i])
     return [names, documents, tokens]
 
 
 def remove_punctuations(line):
-    first_pass = re.sub("([,.!?+\-*/=()\[\]<>@#№\"$;%:^•«»\n„“—–])", "", line)
+    first_pass = re.sub("([,.!?+\-*/_{}='()\[\]<>@#№\"$;%:^•«»\n„“—–])", " ", line)
     return re.sub("(  )", " ", first_pass)
 
 
